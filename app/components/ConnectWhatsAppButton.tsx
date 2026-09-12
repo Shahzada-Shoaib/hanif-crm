@@ -4,8 +4,7 @@ import { useState } from "react";
 
 /**
  * Embedded Signup — Coexistence flow
- * Purana WhatsApp Business App number Cloud API ke sath link karta hai.
- * Meta config mein coexistence / Business App onboarding enabled hona chahiye.
+ * Links an existing WhatsApp Business App number to Cloud API.
  */
 export default function ConnectWhatsAppButton() {
   const [busy, setBusy] = useState(false);
@@ -15,18 +14,16 @@ export default function ConnectWhatsAppButton() {
     const configId = process.env.NEXT_PUBLIC_META_CONFIG_ID;
 
     if (!appId || !configId) {
-      alert("Missing NEXT_PUBLIC_META_APP_ID or NEXT_PUBLIC_META_CONFIG_ID");
+      alert("WhatsApp connection is not configured yet. Please contact support.");
       return;
     }
 
     setBusy(true);
 
-    // Must match Meta Valid OAuth Redirect URIs exactly
     const redirectUri = `${window.location.origin}/api/whatsapp/callback`;
     const state = crypto.randomUUID();
     sessionStorage.setItem("wa_oauth_state", state);
 
-    // Coexistence: featureType triggers WhatsApp Business App onboarding (QR / link)
     const extras = JSON.stringify({
       setup: {},
       sessionInfoVersion: "3",
@@ -42,26 +39,22 @@ export default function ConnectWhatsAppButton() {
     url.searchParams.set("state", state);
     url.searchParams.set("extras", extras);
 
-    console.log("Coexistence OAuth redirect_uri:", redirectUri);
-    console.log("Config ID:", configId);
     window.location.href = url.toString();
   };
 
   return (
-    <div className="max-w-xl">
+    <div>
       <button
         type="button"
         onClick={handleLaunchSignup}
         disabled={busy}
-        className="mt-6 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold py-2 px-4 rounded"
+        className="rounded-lg bg-green-600 px-5 py-2.5 font-semibold text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-gray-400"
       >
-        {busy ? "Redirecting to Meta..." : "Connect WhatsApp Business App"}
+        {busy ? "Opening Meta…" : "Connect WhatsApp Business"}
       </button>
-
-      <p className="mt-3 text-sm text-gray-600">
-        Coexistence flow: apna pehle se chal raha WhatsApp Business App number
-        Meta pe link hoga (QR / Business App onboarding). Flow end tak complete
-        karo — sirf Continue mat dabao.
+      <p className="mt-3 max-w-md text-sm text-gray-600">
+        You’ll be redirected to Meta to securely link your WhatsApp Business
+        account. You can keep using the WhatsApp Business app after connecting.
       </p>
     </div>
   );

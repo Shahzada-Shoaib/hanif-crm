@@ -11,66 +11,68 @@ export default async function Home({
     verified_name?: string;
   }>;
 }) {
-  const {
-    whatsapp,
-    waba_id,
-    phone_number_id,
-    display_phone,
-    verified_name,
-  } = await searchParams;
+  const { whatsapp, display_phone, verified_name } = await searchParams;
 
   return (
-    <div className="p-8 max-w-2xl">
-      <h1 className="text-3xl font-bold">Hello Hanif CRM</h1>
-      <p className="mt-2 text-gray-600">
-        Test number inbox + coexistence connect (later)
+    <div className="mx-auto max-w-2xl px-6 py-12">
+      <h1 className="text-3xl font-bold tracking-tight">Hanif CRM</h1>
+      <p className="mt-3 text-gray-600">
+        Connect your WhatsApp Business number and manage customer chats from one
+        inbox.
       </p>
-      <a href="/inbox" className="mt-3 inline-block text-green-700 underline">
-        Open Inbox
-      </a>
+
+      <ol className="mt-6 list-decimal space-y-1 pl-5 text-sm text-gray-700">
+        <li>Connect WhatsApp Business</li>
+        <li>Open Inbox to view conversations</li>
+        <li>Reply to customers from the CRM</li>
+      </ol>
 
       {whatsapp === "connected" && (
-        <div className="mt-4 rounded border border-green-300 bg-green-50 p-4 text-green-800">
-          <p className="font-bold">WhatsApp Connected Successfully!</p>
-          <ul className="mt-2 space-y-1 text-sm">
-            {waba_id && <li>WABA ID: {waba_id}</li>}
-            {phone_number_id && <li>Phone Number ID: {phone_number_id}</li>}
-            {display_phone && <li>Display Phone: {display_phone}</li>}
-            {verified_name && <li>Verified Name: {verified_name}</li>}
-          </ul>
-          <p className="mt-2 text-xs text-green-700">
-            Token / IDs terminal mein bhi logged hain. Next: webhook + inbox UI.
-          </p>
+        <div className="mt-6 rounded-lg border border-green-200 bg-green-50 p-4 text-green-900">
+          <p className="font-semibold">WhatsApp connected successfully</p>
+          {(verified_name || display_phone) && (
+            <p className="mt-1 text-sm">
+              {verified_name}
+              {verified_name && display_phone ? " · " : ""}
+              {display_phone}
+            </p>
+          )}
+          <a
+            href="/inbox"
+            className="mt-3 inline-block text-sm font-medium text-green-800 underline"
+          >
+            Open Inbox
+          </a>
         </div>
       )}
 
       {whatsapp === "incomplete" && (
-        <div className="mt-4 rounded border border-amber-300 bg-amber-50 p-4 text-amber-900">
-          <p className="font-bold">Meta login OK — WhatsApp number linked nahi</p>
-          <p className="mt-2 text-sm">
-            Token mil gaya lekin WABA ID null hai. Matlab sirf permissions allow
-            hui; Business App / phone / OTP step complete nahi hua.
+        <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-950">
+          <p className="font-semibold">Connection incomplete</p>
+          <p className="mt-1 text-sm">
+            Login succeeded, but a WhatsApp Business number was not linked.
+            Please try connecting again and complete all onboarding steps.
           </p>
-          <ul className="mt-2 list-disc pl-5 text-sm">
-            <li>Meta Business → Integrations → CRM App → Remove</li>
-            <li>
-              Config ID coexistence / Business App onboarding wala hona chahiye
-            </li>
-            <li>
-              Dubara connect karke QR / Business App flow end tak complete karo
-            </li>
-          </ul>
         </div>
       )}
 
       {whatsapp === "error" && (
-        <div className="mt-4 rounded border border-red-300 bg-red-50 p-4 text-red-800">
-          <p className="font-bold">WhatsApp connection failed</p>
-          <p className="mt-1 text-sm">Terminal logs check karo.</p>
+        <div className="mt-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-900">
+          <p className="font-semibold">Couldn’t connect WhatsApp</p>
+          <p className="mt-1 text-sm">Please try again in a few moments.</p>
         </div>
       )}
 
-      <ConnectWhatsAppButton />
+      <div className="mt-8">
+        <ConnectWhatsAppButton />
+      </div>
+
+      <p className="mt-8 text-sm text-gray-500">
+        Already connected?{" "}
+        <a href="/inbox" className="text-green-700 underline">
+          Go to Inbox
+        </a>
+      </p>
     </div>
   );
 }

@@ -21,7 +21,7 @@ export default function InboxPage() {
     fetch("/api/whatsapp/messages")
       .then((res) => res.json())
       .then((data) => setMessages(data.messages ?? []))
-      .catch(() => setError("Messages load failed"));
+      .catch(() => setError("Couldn’t load messages."));
   };
 
   useEffect(() => {
@@ -60,36 +60,37 @@ export default function InboxPage() {
       .then((res) => res.json())
       .then((data) => {
         if (!data.ok) {
-          setError(data.error || "Send failed");
+          setError(data.error || "Couldn’t send message.");
           return;
         }
         setDraft("");
         load();
       })
-      .catch(() => setError("Send failed"));
+      .catch(() => setError("Couldn’t send message."));
   };
 
   return (
-    <div className="flex min-h-screen">
-      <aside className="w-72 border-r p-4">
-        <a href="/" className="text-sm text-gray-500">
-          ← Home
-        </a>
-        <h1 className="mt-2 text-xl font-bold">Inbox</h1>
-        <div className="mt-4 space-y-2">
+    <div className="mx-auto flex min-h-[70vh] max-w-5xl border-x border-gray-200">
+      <aside className="w-72 border-r border-gray-200 p-4">
+        <h1 className="text-lg font-semibold">Conversations</h1>
+        <p className="mt-1 text-xs text-gray-500">WhatsApp customer inbox</p>
+        <div className="mt-4 space-y-1">
           {conversations.length === 0 && (
-            <p className="text-sm text-gray-500">Abhi koi chat nahi.</p>
+            <p className="rounded-lg bg-gray-50 p-3 text-sm text-gray-600">
+              No messages yet. Connect WhatsApp, then customer chats will appear
+              here.
+            </p>
           )}
           {conversations.map(([contact, last]) => (
             <button
               key={contact}
               type="button"
               onClick={() => setActive(contact)}
-              className={`block w-full rounded p-2 text-left text-sm ${
-                active === contact ? "bg-green-100" : "hover:bg-gray-100"
+              className={`block w-full rounded-lg p-3 text-left text-sm ${
+                active === contact ? "bg-green-50" : "hover:bg-gray-50"
               }`}
             >
-              <div className="font-medium">{contact}</div>
+              <div className="font-medium text-gray-900">{contact}</div>
               <div className="truncate text-gray-500">{last.text}</div>
             </button>
           ))}
@@ -98,18 +99,22 @@ export default function InboxPage() {
 
       <main className="flex flex-1 flex-col p-4">
         {!active ? (
-          <p className="text-gray-500">Koi conversation select karo.</p>
+          <div className="flex flex-1 items-center justify-center text-sm text-gray-500">
+            Select a conversation to view messages.
+          </div>
         ) : (
           <>
-            <h2 className="border-b pb-2 font-bold">{active}</h2>
+            <h2 className="border-b border-gray-200 pb-3 font-semibold">
+              {active}
+            </h2>
             <div className="flex-1 space-y-2 overflow-y-auto py-4">
               {thread.map((msg) => (
                 <div
                   key={msg.id}
-                  className={`max-w-[70%] rounded px-3 py-2 ${
+                  className={`max-w-[75%] rounded-lg px-3 py-2 text-sm ${
                     msg.direction === "out"
                       ? "ml-auto bg-green-600 text-white"
-                      : "bg-gray-100"
+                      : "bg-gray-100 text-gray-900"
                   }`}
                 >
                   {msg.text}
@@ -127,12 +132,12 @@ export default function InboxPage() {
               <input
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
-                className="flex-1 rounded border px-3 py-2"
-                placeholder="Reply..."
+                className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm"
+                placeholder="Type a reply…"
               />
               <button
                 type="submit"
-                className="rounded bg-green-600 px-4 py-2 text-white"
+                className="rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700"
               >
                 Send
               </button>
