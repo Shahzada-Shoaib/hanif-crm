@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -27,25 +28,25 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-white text-gray-900">
         <header className="border-b border-gray-200 px-6 py-4">
           <div className="mx-auto flex max-w-5xl items-center justify-between">
-            <a href="/" className="text-lg font-semibold tracking-tight">
+            <Link href="/" className="text-lg font-semibold tracking-tight">
               Hanif CRM
-            </a>
+            </Link>
             <nav className="flex gap-4 text-sm text-gray-600">
-              <a href="/inbox" className="hover:text-gray-900">
+              <Link href="/inbox" className="hover:text-gray-900">
                 Inbox
-              </a>
-              <a href="/privacy" className="hover:text-gray-900">
+              </Link>
+              <Link href="/privacy" className="hover:text-gray-900">
                 Privacy
-              </a>
+              </Link>
             </nav>
           </div>
         </header>
         <main className="flex-1">{children}</main>
         <footer className="border-t border-gray-200 px-6 py-4 text-center text-xs text-gray-500">
           Hanif CRM · WhatsApp business messaging for teams ·{" "}
-          <a href="/privacy" className="underline">
+          <Link href="/privacy" className="underline">
             Privacy Policy
-          </a>
+          </Link>
         </footer>
       </body>
     </html>

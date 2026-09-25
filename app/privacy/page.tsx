@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function PrivacyPage() {
   return (
     <div className="mx-auto max-w-2xl px-6 py-12">
@@ -29,9 +31,9 @@ export default function PrivacyPage() {
         </p>
       </div>
 
-      <a href="/" className="mt-8 inline-block text-sm text-green-700 underline">
+      <Link href="/" className="mt-8 inline-block text-sm text-green-700 underline">
         ← Back to Home
-      </a>
+      </Link>
     </div>
   );
 }

@@ -1,39 +1,19 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import path from "path";
+import { db } from "./db";
+import type { ChatMessage } from "./types";
+export type { ChatMessage } from "./types";
 
-export type ChatMessage = {
-  id: string;
-  from: string;
-  to: string;
-  text: string;
-  direction: "in" | "out";
-  timestamp: number;
-};
-
-const dataDir = path.join(process.cwd(), "data");
-const filePath = path.join(dataDir, "messages.json");
-
-function readAll(): ChatMessage[] {
-  if (!existsSync(filePath)) return [];
-  try {
-    return JSON.parse(readFileSync(filePath, "utf8")) as ChatMessage[];
-  } catch {
-    return [];
-  }
-}
-
-function writeAll(messages: ChatMessage[]) {
-  if (!existsSync(dataDir)) mkdirSync(dataDir, { recursive: true });
-  writeFileSync(filePath, JSON.stringify(messages, null, 2));
-}
-
-export function getMessages(): ChatMessage[] {
-  return readAll().sort((a, b) => a.timestamp - b.timestamp);
+export function getMessages(phoneNumberId: string): ChatMessage[] {
+  return db().prepare("SELECT * FROM messages WHERE phone_number_id = ? ORDER BY timestamp, id").all(phoneNumberId).map((row) => ({
+    id: String(row.id), phoneNumberId: String(row.phone_number_id), from: String(row.sender),
+    to: String(row.recipient), text: String(row.body), direction: row.direction as "in" | "out",
+    timestamp: Number(row.timestamp),
+  }));
 }
 
 export function addMessage(message: ChatMessage) {
-  const messages = readAll();
-  if (messages.some((m) => m.id === message.id)) return;
-  messages.push(message);
-  writeAll(messages);
+  db().prepare(`INSERT INTO messages VALUES (?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(phone_number_id, id) DO UPDATE SET body=excluded.body
+    WHERE messages.body = '[media_placeholder message]' AND excluded.body <> '[media_placeholder message]'`).run(
+    message.id, message.phoneNumberId, message.from, message.to, message.text, message.direction, message.timestamp,
+  );
 }
