@@ -1,0 +1,282 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/ibm-plex-sans";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  color-scheme: light;
+  font-family: "IBM Plex Sans Variable", ui-sans-serif, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  --background: #f5f7fa;
+  --foreground: #172b4d;
+  --card: #ffffff;
+  --card-foreground: #172b4d;
+  --popover: #ffffff;
+  --popover-foreground: #172b4d;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #edf1f6;
+  --secondary-foreground: #253858;
+  --muted: #eef2f6;
+  --muted-foreground: #64748b;
+  --accent: #e7f4f2;
+  --accent-foreground: #0f766e;
+  --destructive: #dc2626;
+  --border: #dce3eb;
+  --input: #cbd5e1;
+  --ring: #2563eb;
+  --success: #0f766e;
+  --success-foreground: #ffffff;
+  --warning: #d97706;
+  --warning-foreground: #422006;
+  --info: #2563eb;
+  --info-foreground: #ffffff;
+  --chart-1: #2563eb;
+  --chart-2: #0f766e;
+  --chart-3: #7c3aed;
+  --chart-4: #d97706;
+  --chart-5: #475569;
+  --radius: 0.5rem;
+  --sidebar: #172b4d;
+  --sidebar-foreground: #dfe7f2;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #172b4d;
+  --sidebar-accent: #243b63;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #2d456b;
+  --sidebar-ring: #60a5fa;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #0f172a;
+  --foreground: #e8eef7;
+  --card: #17233b;
+  --card-foreground: #e8eef7;
+  --popover: #17233b;
+  --popover-foreground: #e8eef7;
+  --primary: #60a5fa;
+  --primary-foreground: #0f1d36;
+  --secondary: #24334e;
+  --secondary-foreground: #e8eef7;
+  --muted: #202e46;
+  --muted-foreground: #a4b2c6;
+  --accent: #173e44;
+  --accent-foreground: #7dd3c7;
+  --destructive: #f87171;
+  --border: #34445e;
+  --input: #465873;
+  --ring: #60a5fa;
+  --success: #2dd4bf;
+  --success-foreground: #102d2b;
+  --warning: #fbbf24;
+  --warning-foreground: #382608;
+  --info: #60a5fa;
+  --info-foreground: #102447;
+  --sidebar: #101c33;
+  --sidebar-foreground: #dfe7f2;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #172b4d;
+  --sidebar-accent: #243b63;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #2d456b;
+  --sidebar-ring: #60a5fa;
+}
+
+@theme inline {
+  --font-sans: "IBM Plex Sans Variable", ui-sans-serif, sans-serif;
+  --font-heading: "IBM Plex Sans Variable", ui-sans-serif, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-navy: #172b4d;
+  --color-trust: #2563eb;
+  --color-teal: #0f766e;
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) * 0.75);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) * 1.25);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 2.5);
+  --radius-4xl: calc(var(--radius) * 3);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  html {
+    @apply font-sans;
+  }
+
+  body {
+    @apply m-0 min-w-80 bg-background text-foreground antialiased;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--primary) 22%, transparent);
+    color: var(--foreground);
+  }
+}
+
+@layer utilities {
+  .crm-scrollbar {
+    scrollbar-color: #94a3b8 transparent;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .crm-scrollbar::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  .crm-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .crm-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: padding-box;
+  }
+
+  .crm-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    background-clip: padding-box;
+  }
+
+  .route-entry {
+    animation: route-entry 5.4s ease-in-out infinite;
+  }
+
+  .route-node {
+    animation: route-node 5.4s ease-in-out infinite;
+  }
+
+  .route-node:nth-child(2) {
+    animation-delay: 0.35s;
+  }
+
+  .route-node:nth-child(3) {
+    animation-delay: 0.7s;
+  }
+
+  .route-flow-line span {
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #2563eb;
+    box-shadow: 0 0 0 5px rgb(37 99 235 / 10%);
+    animation: route-signal 3.8s cubic-bezier(.4, 0, .2, 1) infinite;
+  }
+
+  .route-resolution {
+    animation: route-resolution 5.4s ease-in-out infinite;
+  }
+
+  .route-log-dot {
+    animation: route-log 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes route-entry {
+  0%, 12%, 100% { opacity: .72; transform: translateY(0); }
+  20%, 78% { opacity: 1; transform: translateY(-2px); }
+}
+
+@keyframes route-node {
+  0%, 22%, 100% { border-color: #dce3eb; transform: translateY(0); }
+  34%, 62% { border-color: #bfdbfe; transform: translateY(-3px); }
+}
+
+@keyframes route-signal {
+  0% { left: 0; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { left: calc(100% - 7px); opacity: 0; }
+}
+
+@keyframes route-resolution {
+  0%, 48%, 100% { opacity: .76; transform: translateY(3px); }
+  58%, 88% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes route-log {
+  0%, 100% { opacity: .4; transform: scale(.8); }
+  45% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-entry,
+  .route-node,
+  .route-flow-line span,
+  .route-resolution,
+  .route-log-dot {
+    animation: none;
+  }
+}

@@ -1,0 +1,28 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+fast-api/venv/
+**/__pycache__/
+*.py[cod]
+
+# Frontend
+my-app/node_modules/
+my-app/dist/
+
+# Uploaded WhatsApp media
+fast-api/storage/
+storage/
+
+# Database backups
+*.dump
+*.sql
+*.backup
+
+# IDE/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

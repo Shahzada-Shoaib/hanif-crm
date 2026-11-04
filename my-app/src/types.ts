@@ -1,0 +1,11 @@
+export type Connection={phoneNumberId:string;wabaId:string;displayPhone:string;verifiedName:string;webhookSubscribed:boolean;updatedAt:number;companyId:string|null}
+export type Company={id:string;name:string;createdAt:number}
+export type UserRole='super_admin'|'admin'|'user'
+export type CurrentUser={id:string;username:string;displayName:string;role:UserRole;workspaceId:string|null;companyIds?:string[];createdBy:string|null;status:'active'|'disabled';createdAt:number}
+export type RegisteredTeamUser={displayName:string;username:string;status:'active'|'disabled';createdAt:number}
+export type RegisteredCompany={id:string;name:string}
+export type RegisteredAccount={id:string;workspaceName:string;displayName:string;username:string;status:'active'|'disabled';createdAt:number;users:RegisteredTeamUser[];companyList:RegisteredCompany[];connections:number}
+export type MessageMedia={id:string;mimeType:string;filename:string;caption:string;sha256:string}
+export type ChatMessage={id:string;phoneNumberId:string;from:string;to:string;text:string;type?:string;media?:MessageMedia|null;direction:'in'|'out';timestamp:number;status?:string;error?:string|null;editedText?:string|null;editedAt?:number|null;deletedAt?:number|null;reactionEmoji?:string|null;reactionAt?:number|null}
+export type Conversation={contactId:string;contactName:string;lastMessage:Pick<ChatMessage,'id'|'text'|'direction'|'timestamp'>;unreadCount:number;status:'open'|'closed'|'archived';assignedUserId:string|null}
+export type Bootstrap={user:CurrentUser;connections:Connection[];companies:Company[];meta:{appId:string;version:string;configId:string}}

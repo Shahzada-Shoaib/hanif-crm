@@ -1,0 +1,7 @@
+fastapi>=0.120,<1
+uvicorn[standard]>=0.38,<1
+httpx>=0.28,<1
+anyio>=4,<5
+asyncpg>=0.30,<1
+cryptography>=46,<47
+python-dotenv>=1.1,<2
