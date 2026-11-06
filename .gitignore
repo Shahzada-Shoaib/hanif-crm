@@ -17,6 +17,7 @@ fast-api/storage/
 storage/
 
 # Database backups
+backups/
 *.dump
 *.sql
 *.backup
