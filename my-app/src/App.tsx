@@ -9,7 +9,6 @@ import type { Bootstrap, Connection, CurrentUser } from './types'
 
 const CompaniesPage = lazy(() => import('./pages/CompaniesPage'))
 const AccountsPage = lazy(() => import('./pages/AccountsPage'))
-const HomePage = lazy(() => import('./pages/HomePage'))
 const InboxPage = lazy(() => import('./pages/InboxPage'))
 const LoginPage = lazy(() => import('./pages/LoginPage'))
 const OnboardPage = lazy(() => import('./pages/OnboardPage'))
@@ -104,7 +103,7 @@ export default function App() {
   >
     <Suspense fallback={<WorkspaceState />}>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={authenticated ? <Navigate to={currentUser?.role === 'super_admin' ? '/accounts' : '/inbox'} replace /> : <LoginPage onLogin={user => { setCurrentUser(user); setAuthenticated(true) }} />} />
         <Route path="/register" element={authenticated ? <Navigate to="/inbox" replace /> : <RegisterPage onRegister={user => { setCurrentUser(user); setAuthenticated(true) }} />} />
         <Route path="/accounts" element={!authenticated ? <Navigate to="/login" replace /> : currentUser?.role === 'super_admin' ? <AccountsPage /> : <Navigate to="/inbox" replace />} />
